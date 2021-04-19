@@ -6,7 +6,7 @@ export default function App() {
       <h1>Hello CodeSandbox</h1>
       <h2>Start editing to see some magic happen!</h2>
 
-      <Cards color="yellow" num="5" />
+      <Cards color="" num="" />
     </div>
   );
 }
@@ -19,7 +19,7 @@ function Cards(props) {
   );
 }
 
-function deck(props) {}
+// function deck(props) {}
 
 // function cardColor(props)
 // {
@@ -29,3 +29,17 @@ function deck(props) {}
 //     Green,
 //     Wild
 // }
+
+
+function deck(){
+  const num=['1','2','3'];
+  const color=['red','blue'];
+  const card=[];
+  for (let i=0; i< num.length; i++){
+
+    for (let c=0; c< color.length; c++){
+      card.push()
+    }
+  }
+
+};
