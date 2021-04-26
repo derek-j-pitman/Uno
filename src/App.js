@@ -30,7 +30,6 @@ function Cards(props) {
 //     Wild
 // }
 
-
 function deck(){
   const num=['1','2','3'];
   const color=['red','blue'];
