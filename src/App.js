@@ -1,15 +1,18 @@
 import "./styles.css";
 
 export default function App() {
-  let extraCards = addCustomCards();
+  let gameDeck = deck();
+  let gameDeal = dealDeck(gameDeck)
   return (
     <div className="App">
-      <h1>Hello CodeSandbox</h1>
-      <h2>Start editing to see some magic happen!</h2>
-
-      {/* <Cards color={cards[0]} num={cards[1]} />
-      <Cards color={cards[2]} num={cards[3]} /> */}
-      {cards}
+      <h1>Player 1</h1>
+      {gameDeal[0]}
+      <h1>Player 2</h1>
+      {gameDeal[1]}
+      <h1>Player 3</h1>
+      {gameDeal[2]}
+      <h1>Player 4</h1>
+      {gameDeal[3]}
     </div>
   );
 }
@@ -21,6 +24,33 @@ function Cards(props) {
     </div>
   );
 }
+
+// Input: array of Cards components
+// Output: array of five arrays of Cards components
+//         first four are hands for players
+//         remainder is the draw pile
+
+function dealDeck(deck){
+
+  var hand = [[],[],[],[]];
+
+  for (let p = 0; p < 4; p++) {
+   for (let i = 0; i < 7; i++) {
+		
+    var randHand = Math.floor(Math.random() * deck.length);
+
+
+      hand[p].push(...deck.slice(randHand, randHand+1));
+    
+      deck.splice(randHand, 1);
+    
+    }
+  }
+
+  return [...hand, deck];
+};
+  
+
 
 let colors = ["red", "blue"];
 let nums = ["1", "2"];
@@ -34,6 +64,8 @@ let nums = ["1", "2"];
 //     Green,
 //     Wild
 // }
+
+// let [hand1, setHand1] = useState([]);
 
 function addCustomCards() {
   let hotCard = <Cards color="hot_pink" num="999" />;
@@ -57,3 +89,5 @@ function deck() {
 let cards = deck();
 
 console.log(cards);
+
+
