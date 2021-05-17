@@ -81,26 +81,6 @@ function Draw(props) {
   );
 }
 
-let colors = ["red", "blue"];
-let nums = ["1", "2"];
-// function deck(props) {}
-
-// function cardColor(props)
-// {
-//     Red,
-//     Blue,
-//     Yellow,
-//     Green,
-//     Wild
-// }
-
-// let [hand1, setHand1] = useState([]);
-
-function addCustomCards() {
-  let hotCard = <Cards color="hot_pink" num="999" />;
-  let coolCard = <Cards color="plaid" num="42" />;
-  return [hotCard, coolCard];
-}
 function deck() {
   const num = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
   const color = ["red", "blue", "green", "yellow"];
@@ -114,7 +94,3 @@ function deck() {
   }
   return card;
 }
-
-let cards = deck();
-
-console.log(cards);
