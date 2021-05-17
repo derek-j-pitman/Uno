@@ -4,6 +4,7 @@ import "./styles.css";
 const numPlayers = 4;
 const gameDeck = deck();
 const gameDeal = dealDeck(gameDeck);
+const top = topCard(gameDeal[4]);
 
 export default function App() {
   let [turn, setTurn] = useState(0);
@@ -25,6 +26,8 @@ export default function App() {
         setTurn={setTurn}
         turn={turn}
       />
+      <h1>Top Card</h1>
+      {top}
     </div>
   );
 }
@@ -47,23 +50,41 @@ function dealDeck(deck) {
 
   for (let p = 0; p < 4; p++) {
     for (let i = 0; i < 7; i++) {
-      var randHand = Math.floor(Math.random() * deck.length);
-
-      hand[p].push(...deck.slice(randHand, randHand + 1));
-
-      deck.splice(randHand, 1);
+      hand[p].push(...drawCardFromPile(deck));
     }
   }
 
   return [...hand, deck];
 }
 
-function dealDrawPile(pile, player) {
+// Input: Array of Cards components, modified in-place
+// Output: A random Cards component from the input array
+// The output card is no longer in the array after this function
+function drawCardFromPile(pile) {
   var pileDraw = Math.floor(Math.random() * pile.length);
-
-  player.push(...pile.slice(pileDraw, pileDraw + 1));
-
+  var card = pile.slice(pileDraw, pileDraw + 1);
   pile.splice(pileDraw, 1);
+  return card;
+}
+
+function playedCard(hand, card) {
+  var movingCard = hand.slice(card, card + 1);
+  hand.splice(card, 1);
+  return movingCard;
+}
+
+function dealDiscard(card) {
+  var discard = [];
+  discard.push(card);
+  return discard;
+}
+
+function topCard(deck) {
+  return drawCardFromPile(deck);
+}
+
+function dealDrawPile(pile, player) {
+  player.push(...drawCardFromPile(pile));
 }
 
 function Draw(props) {
