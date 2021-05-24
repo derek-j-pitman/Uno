@@ -9,6 +9,8 @@ var discard = [];
 
 export default function App() {
   let [turn, setTurn] = useState(0);
+  let tur = turn - 1;
+  console.log(tur);
   console.log(gameDeal);
 
   if (gameDeal[4].length === 0) {
