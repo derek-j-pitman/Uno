@@ -16,6 +16,10 @@ export default function App() {
     discard = [];
   }
 
+  if (gameDeal[turn].length === 0) {
+    return <h1>Player {turn} wins</h1>;
+  }
+
   return (
     <div className="App">
       <h1>Current turn: Player {turn + 1}</h1>
