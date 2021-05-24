@@ -3,40 +3,55 @@ import "./styles.css";
 
 const numPlayers = 4;
 const gameDeck = deck();
-const gameDeal = dealDeck(gameDeck);
-const top = topCard(gameDeal[4]);
+let gameDeal = dealDeck(gameDeck);
+let topC = topCard(gameDeal[4])[0];
+var discard = [];
 
 export default function App() {
   let [turn, setTurn] = useState(0);
-  let [player1, setPlayer1] = useState(gameDeal[0]);
-  let [player2, setPlayer2] = useState(gameDeal[1]);
-  let [player3, setPlayer3] = useState(gameDeal[2]);
-  let [player4, setPlayer4] = useState(gameDeal[3]);
-  let [drawPile, setDrawPile] = useState(gameDeal[4]);
-  let playerStates = [player1, player2, player3, player4];
-  let setPlayerStates = [setPlayer1, setPlayer2, setPlayer3, setPlayer4];
+  console.log(gameDeal);
   return (
     <div className="App">
       <h1>Current turn: Player {turn + 1}</h1>
       <h1>Player {turn + 1}'s Hand:</h1>
-      {playerStates[turn]}
+      {gameDeal[turn].map((c, i) => (
+        <Cards
+          color={c.color}
+          num={c.num}
+          player={gameDeal[turn]}
+          cardInd={i}
+          turn={turn}
+          setTurn={setTurn}
+        />
+      ))}
+
+      <h1>Top Card</h1>
+      <div>
+        {topC.color} {topC.num}
+      </div>
+      <h1>Can't play?</h1>
       <Draw
-        pile={drawPile}
+        pile={gameDeal[4]}
         player={gameDeal[turn]}
         setTurn={setTurn}
         turn={turn}
       />
-      <h1>Top Card</h1>
-      {top}
     </div>
   );
 }
 
 function Cards(props) {
   return (
-    <div>
-      This card is a {props.color} {props.num}
-    </div>
+    <button
+      disabled={props.color !== topC.color && props.num !== topC.num}
+      onClick={() => {
+        dealDiscard(topC);
+        makeTop(playedCard(props.player, props.cardInd));
+        props.setTurn((props.turn + 1) % numPlayers);
+      }}
+    >
+      {props.color} {props.num}
+    </button>
   );
 }
 
@@ -73,10 +88,12 @@ function playedCard(hand, card) {
   return movingCard;
 }
 
-function dealDiscard(card) {
-  var discard = [];
-  discard.push(card);
-  return discard;
+function makeTop(movingCard) {
+  topC = movingCard[0];
+}
+
+function dealDiscard(top) {
+  discard.push(top);
 }
 
 function topCard(deck) {
@@ -109,8 +126,9 @@ function deck() {
   for (let i = 0; i < num.length; i++) {
     for (let c = 0; c < color.length; c++) {
       // card.push(num[i],color[c]);
-      let cardss = <Cards color={color[c]} num={num[i]} />;
-      card.push(cardss);
+      card.push({ color: color[c], num: num[i] });
+      //let cardss = <Cards color={color[c]} num={num[i]} />;
+      //card.push(cardss);
     }
   }
   return card;
