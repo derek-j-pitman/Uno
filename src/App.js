@@ -10,6 +10,12 @@ var discard = [];
 export default function App() {
   let [turn, setTurn] = useState(0);
   console.log(gameDeal);
+
+  if (gameDeal[4].length === 0) {
+    gameDeal[4] = discard;
+    discard = [];
+  }
+
   return (
     <div className="App">
       <h1>Current turn: Player {turn + 1}</h1>
